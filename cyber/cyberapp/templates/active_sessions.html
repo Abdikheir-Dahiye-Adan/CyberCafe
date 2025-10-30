@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active Sessions</title>
+  <style>
+/*     
+  .header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    translate {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    animation: colorchange 6s infinite;
+
+    @keyframes colorchange {
+      0% {background-color: #333;}
+      25% {background-color: #555;}
+      50% {background-color: #777;}
+      75% {background-color: #999;}
+      100% {background-color: #333;}
+    }
+
+  }
+  table{
+    width:80%;
+    margin: auto;
+    border-collapse: collapse;
+    text-align: center;
+    background-color: beige;
+
+ }
+ .active{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #ce9494;
+    animation:blinkColors 4s infinite;
+    animation-timing-function: cubic-bezier(0.175, 0.885,0.32, 1.275);
+
+    
+ }
+ th, td{
+    padding: 10px;
+    border: 1px solid #ddd;
+    width: 80%;
+
+
+ } */
+
+
+ /* <!-- ...existing code... --> */
+
+  /* full-screen animated gradient background */
+  :root{
+    --overlay: rgba(0,0,0,0.35); /* tweak for contrast */
+  }
+
+  html,body{
+    height:100%;
+    margin:0;
+    padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+    color:#111;
+    background: linear-gradient(120deg, #4CAF50 0%, #982ad8 35%, #00b4db 70%, #ff7eb3 100%);
+    background-size: 300% 300%;
+    animation: gradientShift 12s ease-in-out infinite;
+  }
+
+  /* subtle dark overlay so table/text remains readable */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:var(--overlay);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* content wrapper sits above overlay */
+  header, table, a, .active {
+    position:relative;
+    z-index:1;
+  }
+
+  @keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    25%  { background-position: 50% 25%; }
+    50%  { background-position: 100% 50%; }
+    75%  { background-position: 50% 75%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* header */
+  .header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 24px;
+    color:#fff;
+    background: linear-gradient(90deg, rgba(0,0,0,0.25), rgba(255,255,255,0.02));
+    border-radius:6px;
+    margin:18px auto;
+    width:90%;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  }
+
+  .header .title{ font-weight:700; font-size:20px; }
+
+  /* active heading with blink accent */
+  .active{
+    text-align:center;
+    margin:12px auto;
+    font-size:22px;
+    font-weight:700;
+    color:#fff;
+    padding:8px 18px;
+    border-radius:8px;
+    width:60%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(0,0,0,0.08));
+    animation: pulseAccent 4s ease-in-out infinite;
+  }
+
+  @keyframes pulseAccent {
+    0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.03); transform: translateY(0); }
+    50%  { box-shadow: 0 8px 28px rgba(0,0,0,0.25); transform: translateY(-2px); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.03); transform: translateY(0); }
+  }
+
+  /* table styles */
+  table{
+    width:88%;
+    margin:18px auto 40px;
+    border-collapse:collapse;
+    text-align:center;
+    background: rgba(255,255,255,0.92);
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  }
+
+  th{
+    background: linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02));
+    padding:12px 10px;
+    font-weight:700;
+  }
+
+  th, td{
+    padding:12px 10px;
+    border-bottom:1px solid rgba(0,0,0,0.06);
+  }
+
+  tr:last-child td{ border-bottom: none; }
+
+  a{
+    color:#0b57a4;
+    text-decoration:none;
+    font-weight:600;
+  }
+
+  /* responsive tweak */
+  @media (max-width:800px){
+    .header, table{ width:96%; }
+    .active{ width:90%; font-size:18px; }
+  }
+  .home{
+    display: block;
+    width: 100px;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+</style>
+<!-- ...existing code... -->
+
+  </style>
+</head>
+<body>
+   <header class="header">
+    <h2 class="title">Daryeel Cyber caffe</h2>
+    <h1> Active Sessions</h1>
+  </header>
+
+  <h2 class="active">Active Sessions</h2>
+  <table border="1">
+    <tr>
+      <th>Student Name</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    {% for session in active_sessions %}
+    <tr>
+      <td>{{ session.student.firstname }} {{ session.student.lastname }}</td>
+      <td>{{ session.start_date }}</td>
+      <td>{% if session.end_date %}{{ session.end_date }}{% else %}N/A{% endif %}</td>
+      <td>{% if session.is_active %}Active{% else %}Inactive{% endif %}</td>
+      <td>
+        {% if session.is_active %}
+          <a href="{% url 'end_session' session.student.idnumber %}">End Session</a>
+          <a href="{% url 'send_stk' session.student.idnumber %}" class="send-stk btn-link">Send STK</a>
+        {% else %}
+          <a href="{% url 'start_session' session.student.idnumber %}">Start Session</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br>
+
+  <a class="home" href="{% url 'home' %}">Home</a>
+</body>
+</html>
