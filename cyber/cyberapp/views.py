@@ -124,7 +124,9 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request,'login.html',{'message':'Login successful'})
+            return redirect('home')
+        else:
+            return render(request,'login.html',{'message':'Login unsuccessful'})
         # For now, we just redirect to home
     return render(request, 'login.html')
 

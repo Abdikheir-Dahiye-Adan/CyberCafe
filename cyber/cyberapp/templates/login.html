@@ -171,7 +171,11 @@
     <div class="card" role="region" aria-label="Login form">
       <div class="brand">DARYEEL CYBER</div>
       <h1>WELCOME BACK</h1>
-
+      
+      {% if message %}
+        <p style="color:red; text-align:center;">{{ message }}</p>
+      {% endif %}
+      
   <form method="post" action="/login/">
     {% csrf_token %}
     <label for="username">Username:</label>
