@@ -17,6 +17,7 @@ def home(request):
     sess_map = {s.student.id: s for s in active_sessions}  # or use s.student.idnumber if you want to map by idnumber
     for st in students:
         st.active_session = sess_map.get(st.id)  # or sess_map.get(st.idnumber) if using idnumber
+        st.last_session = Usage_sessions.objects.filter(student=st, is_active=False).order_by('-end_date').first()
     return render(request, 'home.html', {'students': students})
 # ...existing code...
 
@@ -97,7 +98,7 @@ def active_sessions(request):
         st.active_session = recent_session if recent_session and recent_session.is_active and recent_session.end_date is None else None
     active_sessions = Usage_sessions.objects.filter(is_active=True, end_date__isnull=True).select_related('student')
     return render(request, 'active_sessions.html', {'active_sessions': active_sessions, 'students': students})
-    
+
 def start_session(request, idnumber):
     student = get_object_or_404(Student, idnumber=idnumber)
     session = Usage_sessions.objects.create(student=student,is_active=True)
