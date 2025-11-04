@@ -90,8 +90,13 @@ def update_student(request, idnumber):
     return render(request, 'update_student.html', {'form': form})
 
 def active_sessions(request):
-    active_sessions = Usage_sessions.objects.filter(is_active=True,end_date__isnull=True).select_related('student')
-    return render(request, 'active_sessions.html', {'active_sessions': active_sessions})
+    students = Student.objects.all()
+    for st in students:
+        # Get the most recent session for this student
+        recent_session = Usage_sessions.objects.filter(student=st).order_by('-start_date').first()
+        st.active_session = recent_session if recent_session and recent_session.is_active and recent_session.end_date is None else None
+    active_sessions = Usage_sessions.objects.filter(is_active=True, end_date__isnull=True).select_related('student')
+    return render(request, 'active_sessions.html', {'active_sessions': active_sessions, 'students': students})
     
 def start_session(request, idnumber):
     student = get_object_or_404(Student, idnumber=idnumber)
