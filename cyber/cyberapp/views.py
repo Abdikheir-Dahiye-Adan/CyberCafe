@@ -66,7 +66,7 @@ def payment_list(request):
         'payment_list.html',
         {
             'payments': payments,
-            'fully_paid_students': fully_paid_students
+            'fully_paid_students': fully_paid_students,
             'no_fully_paid_message': no_fully_paid_message
         }
     )
