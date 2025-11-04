@@ -23,7 +23,15 @@ def home(request):
 
 @login_required
 def students_list(request):
-    students = Student.objects.all()
+    MONTHLY_FEE = 3000
+    students = list(Student.objects.all())
+    now = timezone.now()
+    month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    for st in students:
+        # Payments made this month
+        payments_this_month = st.payments.filter(date__gte=month_start)
+        st.amount_paid = sum(p.amount for p in payments_this_month)
+        st.balance = MONTHLY_FEE - st.amount_paid if MONTHLY_FEE - st.amount_paid > 0 else 0
     return render(request, 'students_list.html', {'students': students})
 
 @login_required
