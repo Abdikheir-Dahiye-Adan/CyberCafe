@@ -2,11 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Student, Payment, Usage_sessions
 from .forms import StudentForm, PaymentForm
 from django.utils import timezone
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 
 # ...existing code...
+@login_required
 def home(request):
     # load students and attach current active session (if any) to each student object
     students = list(Student.objects.all())  # convert to list so we can add attrs
@@ -17,10 +20,12 @@ def home(request):
     return render(request, 'home.html', {'students': students})
 # ...existing code...
 
+@login_required
 def students_list(request):
     students = Student.objects.all()
     return render(request, 'students_list.html', {'students': students})
 
+@login_required
 def student_detail(request, idnumber):
     student = Student.objects.get(id=idnumber)
     payments = student.payments.all()
@@ -35,7 +40,7 @@ def student_payments(request, idnumber):
     payments = student.payments.all()
     return render(request, 'student_payments.html', {'student': student, 'payments': payments})
 
-
+@login_required
 def add_student(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
@@ -72,6 +77,7 @@ def add_payment(request):
     return render(request, 'add_payment.html', {'form': form})
 
 # update student function
+@login_required
 def update_student(request, idnumber):
     student = get_object_or_404(Student, idnumber=idnumber)
     if request.method == 'POST':
@@ -110,6 +116,17 @@ def send_stk(request, idnumber):
     # For now, we just redirect back to home
     return redirect('home')
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # Add authentication logic here
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return render(request,'login.html',{'message':'Login successful'})
+        # For now, we just redirect to home
+    return render(request, 'login.html')
 
 
 
