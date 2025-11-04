@@ -57,7 +57,7 @@
     75% {color: orange;}
     100% {color: red;}
   } */
-   body{
+  /* body{
     background-image: url('../static/images/internetcafe.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -66,11 +66,8 @@
     padding: 20px;
     display: grid;
     justify-content: center;
-
-    
-    
-   }
-   button{
+    }
+  button{
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -78,7 +75,7 @@
     border-radius: 4px;
     cursor: pointer;
     margin-bottom: 20px;
-   }
+  }
     button:hover{
       background-color: #45a049;
 
@@ -123,12 +120,139 @@
       justify-content: center;
       align-items: center; */
       
-    }
+    /* }
     label{
       color: red;
     }
 
-    
+     */ */
+
+  :root {
+      --main-bg1: #ffecd2;
+      --main-bg2: #fcb69f;
+      --form-bg: rgba(255,255,255,0.97);
+      --primary: #ff7e5f;
+      --primary-dark: #b24592;
+      --accent: #f857a6;
+      --shadow: 0 10px 32px rgba(252,182,159,0.18);
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(120deg, var(--main-bg1) 0%, var(--main-bg2) 100%);
+      background-size: 200% 200%;
+      animation: bgMove 10s ease-in-out infinite;
+      color: #333;
+      min-height: 100vh;
+    }
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 2.4rem;
+      font-weight: bold;
+      color: var(--primary-dark);
+      letter-spacing: 2px;
+      text-shadow: 0 4px 18px rgba(248,87,166,0.12);
+      animation: colorchange 5s infinite;
+    }
+
+    @keyframes colorchange {
+      0% { color: #b24592; }
+      25% { color: #f857a6; }
+      50% { color: #ff7e5f; }
+      75% { color: #fcb69f; }
+      100% { color: #b24592; }
+    }
+    form {
+      background: var(--form-bg);
+      padding: 36px 32px 28px 32px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      width: 420px;
+      max-width: 98vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      animation: formPop 1s cubic-bezier(.16,.84,.44,1) both;
+    }
+
+    @keyframes formPop {
+      from { transform: translateY(24px) scale(.98); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    label {
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 1.08rem;
+      letter-spacing: .5px;
+    }
+
+    input, select, textarea {
+      background: linear-gradient(to top, #fff1eb, #ace0f9 80%);
+      border: 1.5px solid #fcb69f;
+      border-radius: 7px;
+      width: 100%;
+      height: 38px;
+      font-size: 1rem;
+      padding: 7px 12px;
+      margin-bottom: 10px;
+      transition: border-color .18s, box-shadow .18s;
+      box-shadow: 0 2px 8px rgba(252,182,159,0.06);
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px #fcb69f44;
+    }
+    button {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      padding: 12px 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 10px;
+      box-shadow: 0 4px 16px rgba(248,87,166,0.13);
+      transition: background .18s, transform .12s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .back-link {
+      display: block;
+      margin: 24px auto 0 auto;
+      text-align: center;
+      color: var(--primary-dark);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.08rem;
+      transition: color .18s;
+    }
+    .back-link:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      form { width: 98vw; padding: 18px 4vw 14px 4vw; }
+      h1 { font-size: 1.5rem; }
+    }
+
 </style>
 <body>
   <h1>Add Student</h1>
