@@ -41,8 +41,35 @@ def student_detail(request, idnumber):
     return render(request, 'student_detail.html', {'student': student, 'payments': payments})
 
 def payment_list(request):
+    MONTHLY_FEE = 3000
     payments = Payment.objects.all()
-    return render(request, 'payment_list.html', {'payments': payments})
+
+    # Get current month range
+    now = timezone.now()
+    month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+    # Find students who have paid at least 3000 this month
+    students = Student.objects.all()
+    fully_paid_students = []
+    for st in students:
+        payments_this_month = st.payments.filter(date__gte=month_start)
+        total_paid = sum(p.amount for p in payments_this_month)
+        if total_paid >= MONTHLY_FEE:
+            fully_paid_students.append(st)
+
+    no_fully_paid_message = ""
+    if not fully_paid_students:
+        no_fully_paid_message = "No student has fully paid this month."
+
+    return render(
+        request,
+        'payment_list.html',
+        {
+            'payments': payments,
+            'fully_paid_students': fully_paid_students
+            'no_fully_paid_message': no_fully_paid_message
+        }
+    )
 
 def student_payments(request, idnumber):
     student = Student.objects.get(id=idnumber)
