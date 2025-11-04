@@ -1,255 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Students</title>
-</head>
-<style>
-  /* body {
-    background-image: url('../static/images/bg.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-
-  a {
-    text-decoration: none;
-    color: rgb(68, 78, 30);
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  ul {
-    list-style-type: none;
-  }
-
-  li {
-    margin: 20px;
-  }
-
-  nav {
-    margin-top: 50px;
-    margin-left: 50px;
-  }
-  h1 {
-    margin: 20px;
-  }
-  translate {
-    margin: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    color: rgb(68, 78, 30);
-    text-decoration: none;
-    text-align: center;
-    display: block;
-    animation: colorchange 4s infinite;
-  }
-  @keyframes colorchange {
-    0% {color: red;}
-    25% {color: blue;}
-    50% {color: green;}
-    75% {color: orange;}
-    100% {color: red;}
-  } */
-  :root {
-    --overlay: rgba(0, 0, 0, 0.36);
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --muted: #153944;
-    --accent: #4CAF50;
-  }
-
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background: linear-gradient(120deg, #4CAF50 0%, #982ad8 35%, #00b4db 70%, #ff7eb3 100%);
-    background-size: 300% 300%;
-    animation: gradientShift 12s ease-in-out infinite;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: var(--overlay);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  h1 {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    color: #fff;
-    margin: 28px auto 8px;
-    font-size: 28px;
-    text-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-  }
-
-  .list-card {
-    position: relative;
-    z-index: 1;
-    width: 90%;
-    max-width: 900px;
-    margin: 18px auto 48px;
-    background: var(--card-bg);
-    border-radius: 12px;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
-    padding: 18px 20px;
-  }
-
-  ul.student-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  ul.student-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 250, 250, 0.98));
-    transition: transform .18s ease, box-shadow .18s ease;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-  }
-
-  ul.student-list li:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 46px rgba(0, 0, 0, 0.16);
-  }
-
-  ul.student-list li a {
-    color: var(--muted);
-    text-decoration: none;
-    font-weight: 600;
-    display: block;
-    width: 100%;
-  }
-
-  ul.student-list li .meta {
-    color: #666;
-    font-size: 13px;
-    min-width: 160px;
-    text-align: right;
-  }
-
-  a.back {
-    position: relative;
-    z-index: 1;
-    display: inline-block;
-    margin: 8px 4% 28px;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.18);
-    padding: 8px 12px;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background .15s ease, transform .12s ease;
-  }
-
-  a.back:hover {
-    transform: translateY(-3px);
-    background: rgba(0, 0, 0, 0.28);
-  }
-
-  @keyframes gradientShift {
-    0% {
-      background-position: 0% 50%;
+  <style>
+    :root {
+      --overlay: rgba(0, 0, 0, 0.36);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --muted: #153944;
+      --accent: #4CAF50;
     }
 
-    25% {
-      background-position: 50% 25%;
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(120deg, #4CAF50 0%, #982ad8 35%, #00b4db 70%, #ff7eb3 100%);
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease-in-out infinite;
+      -webkit-font-smoothing: antialiased;
     }
 
-    50% {
-      background-position: 100% 50%;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: var(--overlay);
+      pointer-events: none;
+      z-index: 0;
     }
 
-    75% {
-      background-position: 50% 75%;
-    }
-
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  @media (max-width:700px) {
     h1 {
-      font-size: 20px;
-      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #fff;
+      margin: 28px auto 18px;
+      font-size: 28px;
+      text-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     }
 
-    .list-card {
-      width: 96%;
-      padding: 14px;
+    .students-table-container {
+      position: relative;
+      z-index: 1;
+      width: 92%;
+      max-width: 950px;
+      margin: 24px auto 48px;
+      background: var(--card-bg);
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+      padding: 24px 18px;
+      overflow-x: auto;
     }
 
-    ul.student-list li {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-      text-align: left;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,250,0.98));
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+      font-size: 17px;
     }
 
-    ul.student-list li .meta {
-      text-align: left;
-      min-width: auto;
+    th, td {
+      padding: 14px 10px;
+      text-align: center;
+      border-bottom: 1px solid #e0e0e0;
     }
 
-    a.back {
-      margin-left: 2%;
+    th {
+      background: linear-gradient(90deg, #4CAF50 10%, #982ad8 90%);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: 18px;
+      animation: thBlink 4s linear infinite;
     }
-  }
 
-  .home {
-    display: block;
-    width: 100px;
-    margin: auto;
-    padding: 10px;
-    text-align: center;
-    background-color: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-  }
-</style>
+    @keyframes thBlink {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #f3f7fa;
+      transition: background 0.2s;
+    }
+
+    .home {
+      display: block;
+      width: 100px;
+      margin: 30px auto 0;
+      padding: 10px;
+      text-align: center;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      box-shadow: 0 4px 16px rgba(76,175,80,0.18);
+      transition: background 0.18s, transform 0.12s;
+    }
+    .home:hover {
+      background-color: #982ad8;
+      transform: translateY(-3px);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      25% { background-position: 50% 25%; }
+      50% { background-position: 100% 50%; }
+      75% { background-position: 50% 75%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @media (max-width: 700px) {
+      h1 { font-size: 20px; margin-top: 20px; }
+      .students-table-container { width: 99%; padding: 8px; }
+      table { font-size: 15px; }
+      th, td { padding: 8px 4px; }
+    }
+  </style>
+</head>
 <body>
   <h1>Student List</h1>
-  <div class="list-card">
-    <ul>
-      {% for student in students %}
-      <li>
-        <a href="{% url 'student_detail' student.pk %}"> Firstname: {{ student.firstname }} | Lastname: {{
-          student.lastname }}</a>
-      </li>
-      {% endfor %}
-    </ul>
+  <div class="students-table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Amount Paid</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+        <tr>
+          <td>{{ student.firstname }} {{ student.lastname }}</td>
+          <td>{{ student.phonenumber }}</td>
+          <td>{{ student.amount_paid }}</td>
+          <td>{{ student.balance }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No students found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
   <a class="home" href="{% url 'home' %}">Home</a>
-  <table>
-    <thead>
-    <tr>
-      <th>Amount Paid</th>
-      <th>Balance</th>
-    </tr>
-    </thead>
-    <tbody>
-      {% for student in students %}
-      <tr>
-        <td>{{ student.amount_paid }}</td>
-        <td>{{ student.balance }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
 </body>
-
 </html>
